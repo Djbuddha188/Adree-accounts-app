@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Homepage</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: background 0.5s ease;
+        }
+        #theme-message {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        .season {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="theme-container" class="season">
+        <div>
+            <h1 id="theme-message">Welcome!</h1>
+        </div>
+    </div>
+
+    <script>
+        // Detect season based on month
+        function getSeason() {
+            const month = new Date().getMonth();
+            if (month === 11 || month <= 1) return 'winter';
+            if (month >= 2 && month <= 4) return 'spring';
+            if (month >= 5 && month <= 7) return 'summer';
+            if (month >= 8 && month <= 10) return 'autumn';
+        }
+
+        // Apply theme based on season
+        function applyTheme(season) {
+            const themeContainer = document.getElementById('theme-container');
+            const themeMessage = document.getElementById('theme-message');
+
+            const themes = {
+                winter: {
+                    background: "url('https://example.com/snow.jpg')",
+                    message: "Enjoy the winter snow!",
+                },
+                spring: {
+                    background: "url('https://example.com/spring.jpg')",
+                    message: "Spring is here with blooming flowers!",
+                },
+                summer: {
+                    background: "url('https://example.com/summer.jpg')",
+                    message: "It's a bright summer day!",
+                },
+                autumn: {
+                    background: "url('https://example.com/autumn.jpg')",
+                    message: "Autumn leaves are falling!",
+                },
+            };
+
+            themeContainer.style.backgroundImage = themes[season].background;
+            themeMessage.textContent = themes[season].message;
+        }
+
+        // Initialize theme
+        const currentSeason = getSeason();
+        applyTheme(currentSeason);
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stuart Morris Accountants</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('winter-theme.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            text-align: center;
+        }
+        .calculator {
+            max-width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .calculator input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .calculator button {
+            width: 48%;
+            padding: 10px;
+            margin: 1%;
+            font-size: 1em;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Stuart Morris Accountants</h1>
+        <p>Seasonal Themes | Calculators | Tools for Professionals</p>
+    </header>
+    <div class="calculator">
+        <h2>Basic Calculator</h2>
+        <input type="text" id="calc-display" placeholder="0" disabled>
+        <div>
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="setOperator('+')">+</button>
+        </div>
+        <div>
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="setOperator('-')">-</button>
+        </div>
+        <div>
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="setOperator('*')">×</button>
+        </div>
+        <div>
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="setOperator('/')">÷</button>
+        </div>
+    </div>
+    <script>
+        let currentInput = '';
+        let operator = '';
+        let firstOperand = null;
+
+        function appendValue(value) {
+            currentInput += value;
+            updateDisplay(currentInput);
+        }
+
+        function setOperator(op) {
+            if (currentInput === '') return;
+            operator = op;
+            firstOperand = parseFloat(currentInput);
+            currentInput = '';
+        }
+
+        function calculateResult() {
+            if (currentInput === '' || firstOperand === null) return;
+            const secondOperand = parseFloat(currentInput);
+            let result;
+            switch (operator) {
+                case '+':
+                    result = firstOperand + secondOperand;
+                    break;
+                case '-':
+                    result = firstOperand - secondOperand;
+                    break;
+                case '*':
+                    result = firstOperand * secondOperand;
+                    break;
+                case '/':
+                    result = firstOperand / secondOperand;
+                    break;
+                default:
+                    return;
+            }
+            updateDisplay(result);
+            currentInput = result.toString();
+            firstOperand = null;
+            operator = '';
+        }
+
+        function clearDisplay() {
+            currentInput = '';
+            operator = '';
+            firstOperand = null;
+            updateDisplay('0');
+        }
+
+        function updateDisplay(value) {
+            document.getElementById('calc-display').value = value;
+        }
+    </script>
+</body>
+</html>
